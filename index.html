@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Sudeshna ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Styling for the central name */
+        .name {
+            position: absolute;
+            z-index: 2;
+            font-family: 'Great Vibes', cursive;
+            font-size: 80px;
+            color: #ffb6c1;
+            text-shadow: 
+                0 0 10px #ffb6c1,
+                0 0 20px #ff69b4,
+                0 0 30px #ff1493;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 2.5s ease-in-out, transform 2.5s ease-in-out;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        /* Fade-in class triggered by JavaScript */
+        .name.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <canvas id="heartCanvas"></canvas>
+    <div class="name" id="centerName">Sudeshna</div>
+</div>
+
+<script>
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+    const nameElement = document.getElementById('centerName');
+
+    // Canvas size fitting
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+
+    ctx.fillStyle = "#ffb6c1";
+    ctx.font = "bold 8px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    let scale = 11;
+    let i = 0;
+
+    function draw() {
+        if (scale <= 16) {
+            const angle = i * (Math.PI * 2) / 120;
+            
+            // Your heart formula
+            const x = 16 * Math.pow(Math.sin(angle), 3) * scale;
+            const y = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) * scale;
+
+            ctx.fillText("I Love You", centerX + x, centerY + y);
+
+            i++;
+            if (i >= 120) {
+                i = 0;
+                scale++;
+            }
+            setTimeout(draw, 8); 
+        } else {
+            // Reveal name in center after animation finishes
+            nameElement.classList.add('show');
+        }
+    }
+
+    draw();
+
+    // Adjust canvas on screen resize
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+
+</body>
+</html>
